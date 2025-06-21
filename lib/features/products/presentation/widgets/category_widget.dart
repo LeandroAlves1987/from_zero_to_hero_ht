@@ -23,41 +23,39 @@ MaterialColor getMaterialColor(int index) {
     Colors.deepOrange,
     Colors.brown,
     Colors.grey,
-    Colors.blueGrey
+    Colors.blueGrey,
   ];
 
-  if (index + 1 > colors.length) {
-    return colors[index - colors.length];
-  }
-
-  return colors[index];
+  return colors[index % colors.length];
 }
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard(
-      {super.key, required this.category, required this.indexColor});
+  const CategoryCard({
+    super.key,
+    required this.category,
+    required this.indexColor,
+  });
 
   final int indexColor;
-
   final String category;
-
-  // final MaterialColor color;
 
   @override
   Widget build(BuildContext context) {
     MaterialColor color = getMaterialColor(indexColor);
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
       color: color.shade400,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        splashColor: color.shade900,
+        splashColor: color.shade900.withValues(alpha: 0.4),
         onTap: () {
-          //TODO: Navegar para a página de produtos
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProductBycategoryConsumer(category),
+              builder:
+                  (context) =>
+                      ProductByCategoryConsumer(category, color: color),
             ),
           );
         },
@@ -66,17 +64,6 @@ class CategoryCard extends StatelessWidget {
           height: 150,
           child: Stack(
             children: [
-              Align(
-                alignment: const Alignment(0.5, -1.5),
-                child: Container(
-                  width: 120,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: color.shade300,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
               Positioned(
                 bottom: -20,
                 right: -20,
@@ -84,7 +71,7 @@ class CategoryCard extends StatelessWidget {
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: color.shade800,
+                    color: color.shade800.withValues(alpha: 0.8),
                     borderRadius: BorderRadius.circular(60),
                   ),
                 ),
@@ -98,7 +85,7 @@ class CategoryCard extends StatelessWidget {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: color.shade900,
+                      color: color.shade900.withValues(alpha: 0.8),
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
@@ -109,15 +96,25 @@ class CategoryCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white60,
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.black.withValues(alpha: 0.1),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                    ),
                   ),
                   child: Text(
                     category.replaceAll('-', ' ').toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 30,
+                    textAlign: TextAlign.center,
+                    style: textTheme.headlineSmall?.copyWith(
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      color: color.shade800,
+                      shadows: const [
+                        Shadow(
+                          blurRadius: 4.0,
+                          color: Colors.black54,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
                     ),
                   ),
                 ),

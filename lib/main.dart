@@ -1,3 +1,4 @@
+//Main, nao foi mudado muita coisa não
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:from_zero_to_hero_ht/features/products/presentation/categories_page.dart';
@@ -11,8 +12,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CategoryPage(),
-    );
+    return const MaterialApp(home: CategoryPage());
   }
 }
